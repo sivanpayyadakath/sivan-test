@@ -7,14 +7,6 @@ on:
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
-    # env:
-    #   APP_ENV: test
-    #   APP_PORT: 3000
-    #   DB_HOST: localhost
-    #   DB_PORT: 3306
-    #   DB_NAME: user_microservice_db
-    #   DB_USER: root
-    #   DB_PASS: example
 
     steps:
       - uses: actions/checkout@v2
@@ -24,4 +16,5 @@ jobs:
       - run: npm ci
       - run: cp ./.env.template ./.env
       - name: Run app
-        run: npm run start
+      - run: docker-compose up
+      - run: cat src/swagger.json  

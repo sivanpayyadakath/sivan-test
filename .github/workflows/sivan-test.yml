@@ -16,6 +16,6 @@ jobs:
       - run: npm ci
       - run: cp ./.env.template ./.env
       - name: Run app
-        run: docker-compose build sivan-test
+        run: docker-compose build
       - run: ls /github/workspace
       - run: cat /github/workspace/src/swagger.json  

@@ -22,5 +22,6 @@ jobs:
         with:
           node-version: 12
       - run: npm ci
+      - run: cp /.env.template /.env
       - name: Run app
         run: npm run start

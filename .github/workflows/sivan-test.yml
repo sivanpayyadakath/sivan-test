@@ -1,0 +1,26 @@
+name: sivan-tests
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  test_pull_request:
+    runs-on: ubuntu-latest
+    # env:
+    #   APP_ENV: test
+    #   APP_PORT: 3000
+    #   DB_HOST: localhost
+    #   DB_PORT: 3306
+    #   DB_NAME: user_microservice_db
+    #   DB_USER: root
+    #   DB_PASS: example
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - name: Run app
+        run: npm run start

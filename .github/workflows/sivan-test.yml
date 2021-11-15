@@ -16,5 +16,5 @@ jobs:
       - run: npm ci
       - run: cp ./.env.template ./.env
       - name: Run app
-      - run: docker-compose up
+        run: docker-compose up
       - run: cat src/swagger.json  

@@ -35,9 +35,10 @@ jobs:
       - run: pwd
       - run: ls  
       - name: install redoc-cli
-        uses: seeebiii/redoc-cli-github-action@v13
-        with:
-          args: 'bundle src/swagger.json -o src/index.html'
+        run: npm i -g redoc-cli
+        # uses: seeebiii/redoc-cli-github-action@v12
+        # with:
+        #   args: 'bundle src/swagger.json -o src/index.html'
       - run: redoc-cli bundle src/swagger.json -o src/index.html
       - run: ls
       - run: cat src/swagger.json

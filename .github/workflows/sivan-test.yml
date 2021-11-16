@@ -32,6 +32,8 @@ jobs:
         run: docker-compose -f docker-compose.yml up -d mysqldb      
       - name: Run app
         run:  npm run start
+      - run: ls
+      - run: cat src/swagger.json
       # - name: Check running containers
       #   run: docker ps -a
       # - run: cat github/workspace/src/swagger.json  

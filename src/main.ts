@@ -34,5 +34,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port');
   await app.listen(port);
+
+  app.enableShutdownHooks();
+  await app.close();
 }
 bootstrap();

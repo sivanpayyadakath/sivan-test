@@ -28,6 +28,8 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: cp ./.env.template ./.env
+      - name: Build the docker-compose stack
+        run: docker-compose -f docker-compose.yml up -d mysqldb      
       - name: Run app
         run:  npm run start
       # - name: Check running containers

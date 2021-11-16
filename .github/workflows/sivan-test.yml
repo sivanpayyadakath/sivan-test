@@ -32,11 +32,12 @@ jobs:
         run: docker-compose -f docker-compose.yml up -d mysqldb      
       - name: Run app
         run:  npm run start
-      - name: redoc-cli test
-        uses: seeebiii/redoc-cli-github-action@v10
+      - name: install redoc-cli
+        run: npm i redoc-cli
+        # uses: seeebiii/redoc-cli-github-action@v10
         # with:
-        #   args: 'bundle src/swagger.json -o src/index.html'  
-        run: redoc-cli bundle src/swagger.json -o src/index.html
+        #   args: 'bundle src/swagger.json -o src/index.html'
+      - run: redoc-cli bundle src/swagger.json -o src/index.html    
       - run: ls
       - run: cat src/swagger.json
       - run: cat src/index.html

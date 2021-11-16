@@ -7,7 +7,21 @@ on:
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
-
+    env:
+      APP_ENV: test
+      APP_PORT: 3000
+      DB_HOST: localhost
+      DB_PORT: 3306
+      DB_NAME: example_db
+      DB_USER: root
+      DB_PASS: example
+      JWT_ACCESS_TOKEN_EXP_IN_SEC: 3600
+      JWT_REFRESH_TOKEN_EXP_IN_SEC: 7200
+      JWT_PUBLIC_KEY_BASE64: ${{secrets.JWT_PUBLIC_KEY_BASE64}}
+      JWT_PRIVATE_KEY_BASE64: ${{secrets.JWT_PRIVATE_KEY_BASE64}}
+      JWT_INTERNAL_API_TOKEN: ${{secrets.JWT_INTERNAL_API_TOKEN}}
+      DEFAULT_ADMIN_USER_PASSWORD: example_admin_pass
+      
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -16,6 +30,7 @@ jobs:
       - run: npm ci
       - run: cp ./.env.template ./.env
       - name: Run app
-        run: docker-compose build
+        run:  docker-compose -f docker-compose.yml up -d mysqldb
+      - run: docker ps  
       - run: cat github/workspace/src/swagger.json  
       - run: ls  

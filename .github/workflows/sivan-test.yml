@@ -30,7 +30,8 @@ jobs:
       - run: npm ci
       - run: cp ./.env.template ./.env
       - name: Run app
-        run:  docker-compose -f docker-compose.yml up -d mysqldb
-      - run: docker ps  
+        run:  docker-compose up
+      - name: Check running containers
+        run: docker ps -a
       - run: cat github/workspace/src/swagger.json  
       - run: ls  

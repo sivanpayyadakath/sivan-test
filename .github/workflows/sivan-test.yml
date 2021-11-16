@@ -46,4 +46,4 @@ jobs:
       - run: redoc-cli bundle src/swagger.json -o src/index.html
       - run: ls src/
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./src/index.html s3://sivan-test-bucket01.com/user/ --delete
+        run: aws s3 cp src/index.html s3://sivan-test-bucket01.com/user/

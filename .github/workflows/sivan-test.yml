@@ -36,7 +36,7 @@ jobs:
       - run: npm ci
       - run: cp ./.env.template ./.env
       - name: Build the docker-compose stack for mysql
-        run: MYSQL_ROOT_PASSWORD=test MYSQL_DATABASE=example docker-compose -f docker-compose.yml up -d mysqldb  
+        run: docker-compose -f docker-compose.yml up -d mysqldb  
       - name: Run app
         run:  npm run start
       - run: pwd

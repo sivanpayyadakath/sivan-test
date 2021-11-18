@@ -1,7 +1,7 @@
 name: sivan-tests
 
 on:
-  push:
+  pull_request:
     branches: [master]
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
       - name: Build the docker-compose stack for mysql
         run: docker-compose -f docker-compose.yml up -d mysqldb  
       - name: Run app
-        run:  npm run start
+        run: api-docs/generate-swagger.ts
       - run: pwd
       - run: ls  
       - name: install redoc-cli

@@ -38,7 +38,7 @@ jobs:
       - name: Build the docker-compose stack for mysql
         run: docker-compose -f docker-compose.yml up -d mysqldb  
       - name: Run app
-        run: api-docs/generate-swagger.ts
+        run: node_modules/.bin/ts-node ./api-docs/generate-swagger.ts
       - run: pwd
       - run: ls  
       - name: install redoc-cli

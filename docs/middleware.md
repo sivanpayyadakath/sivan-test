@@ -46,3 +46,5 @@ To remove the pino logger
 
 - Remove `AppLoggerModule` module from `imports` and `exports` sections of `SharedModule` declaration (`src/shared/shared.module.ts`).
 - `AppLogger` is already being used in different places in the existing repo. Remove all those usage.
+
+Testing by sivan

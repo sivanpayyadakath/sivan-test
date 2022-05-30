@@ -56,6 +56,7 @@ export class UserController {
   async getMyProfile(
     @ReqContext() ctx: RequestContext,
   ): Promise<BaseApiResponse<UserOutput>> {
+    // test
     this.logger.log(ctx, `${this.getMyProfile.name} was called`);
 
     const user = await this.userService.findById(ctx, ctx.user.id);

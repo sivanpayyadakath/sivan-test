@@ -36,7 +36,7 @@ jobs:
       - name: second action
         run: echo ${{ matrix.environment }} 
       - name: third action
-        run: echo "${{ matrix.service }}:${{ ${{ matrix.service }} }}" 
+        run: echo "${{ matrix.service }}" 
   release:
     needs: [build]
     runs-on: ubuntu-latest

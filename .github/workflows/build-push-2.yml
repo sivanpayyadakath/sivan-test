@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        profile: dev
+        profile: [dev]
         service: [api, websocket, worker]
         include:
         - profile: dev

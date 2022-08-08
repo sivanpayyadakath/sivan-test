@@ -1,50 +1,31 @@
 name: Build and push to each environments based on pushing a tag
 on:
   pull_request:
-    branches: []
+    branches: [master]
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        profile: [dev, mlstg, dwstg]
+        profile: dev
         service: [api, websocket, worker]
         include:
         - profile: dev
-          environment: test1
           service: api
-          image: a
+          image: dev-commserv-chat-server-worker
         - profile: dev
-          environment: test1
           service: websocket
-          image: b
+          account: "337440508476"
+          image: dev-commserv-chat-server-worker
         - profile: dev
-          environment: test1
           service: worker
-          image: c
-        - profile: mlstg
-          service: api
-          environment: test2
-          image: d
-        - profile: mlstg
-          service: websocket
-          environment: test2
-          image: e
-        - profile: mlstg
-          environment: test2
-          image: f
-        - profile: dwstg
-          service: api
-          environment: test3
-          image: g
-        - profile: dwstg
-          environment: test3
-          service: websocket
-          image: h
-        - profile: dwstg
-          service: worker
-          environment: test3
-          image: i
+          image: dev-commserv-chat-server-worker
+    environment:
+          account: "99999999988218281281281282"
+          region:  "ap-northeast-1"
+          keyID:   123
+          secret:  456
+          environment: dev_registry
     outputs:
       version: ${{ steps.tag.outputs.COMMIT_SHA }}          
     steps:
@@ -55,9 +36,9 @@ jobs:
       - name: first action
         run: echo ${{ matrix.profile }}
       - name: second action
-        run: echo ${{ matrix.environment }} 
+        run: echo "${{ matrix.service }}"       
       - name: third action
-        run: echo "${{ matrix.service }}" 
+        run: echo "${{ matrix.account }}:${{ matrix.region }}:${{ matrix.keyID }}:${{ matrix.secret }}" 
   release:
     needs: [build]
     runs-on: ubuntu-latest

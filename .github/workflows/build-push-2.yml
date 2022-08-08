@@ -24,6 +24,7 @@ jobs:
           service: worker
           image: c
     environment:
+      name: dev_registry
       account: 12345
       region:  "ap-northeast-1"
       keyID:   AWS_ACCESS_KEY_ID

@@ -9,7 +9,7 @@ jobs:
       matrix:
         profile: [dev]
         service: [api, websocket, worker]
-        account: 12345
+        account: [12345]
         include:
         - profile: dev
           environment: test1

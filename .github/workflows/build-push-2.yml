@@ -30,17 +30,18 @@ jobs:
       region:  "ap-northeast-1"
       keyID:   ${{ secrets.AWS_ACCESS_KEY_ID }}
       secret:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      version: ${{ github.sha }}
     outputs:
-      commit_sha: ${{ steps.tag.outputs.COMMIT_SHA }}          
+      version: ${{ env.version }}          
     steps:
       - uses: actions/checkout@v2
-      - name: Get the version
-        id: commit_sha
-        run: echo ::set-output name=COMMIT_SHA::${{ github.sha }}
+      # - name: Get the version
+      #   id: commit_sha
+      #   run: echo ::set-output name=COMMIT_SHA::${{ github.sha }}
       - name: first action
         run: echo ${{ matrix.profile }}
       - name: second action
-        run: echo "${{ matrix.service }}:${{ matrix.image }}:${{ steps.commit_sha.outputs.COMMIT_SHA }}"       
+        run: echo "${{ matrix.service }}:${{ matrix.image }}:${{ env.version }}"       
       - name: third action
         run: echo "${{ matrix.account }}:${{ env.region }}:${{ env.name }}:${{ env.keyID }}:${{ env.secret }}" 
   release:
@@ -55,7 +56,7 @@ jobs:
           mv linux-amd64/helm /usr/local/bin/helm
           helm version
       - name: fourth action
-        run: echo ${{ needs.build.outputs.commit_sha }}
+        run: echo ${{ needs.build.outputs.version }}
       # - name: fifth action
       #   run: echo ${{ matrix.environment }} 
       # - name: sixth action

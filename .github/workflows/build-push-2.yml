@@ -40,7 +40,7 @@ jobs:
       - name: first action
         run: echo ${{ matrix.profile }}
       - name: second action
-        run: echo "${{ matrix.service }}:${{ matrix.image }}"       
+        run: echo "${{ matrix.service }}:${{ matrix.image }}:${{ steps.commit_sha.outputs.COMMIT_SHA }}"       
       - name: third action
         run: echo "${{ matrix.account }}:${{ env.region }}:${{ env.name }}:${{ env.keyID }}:${{ env.secret }}" 
   release:

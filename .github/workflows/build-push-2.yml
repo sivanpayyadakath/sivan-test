@@ -9,11 +9,6 @@ jobs:
       matrix:
         profile: dev
         service: [api, websocket, worker]
-        account: 9999999998
-        region:  "ap-northeast-1"
-        keyID:   123
-        secret:  456
-        environment: dev_registry
         include:
         - profile: dev
           environment: test1

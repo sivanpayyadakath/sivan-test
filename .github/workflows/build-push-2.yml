@@ -41,7 +41,7 @@ jobs:
       - name: second action
         run: echo "${{ matrix.service }}"       
       - name: third action
-        run: echo "${{ matrix.account }}:${{ matrix.region }}:${{ matrix.keyID }}:${{ matrix.secret }}" 
+        run: echo "${{ matrix.account }}:${{ env.region }}:${{ env.name }}:${{ env.keyID }}:${{ env.secret }}" 
   release:
     needs: [build]
     runs-on: ubuntu-latest

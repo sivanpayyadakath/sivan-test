@@ -23,7 +23,7 @@ jobs:
           environment: test1
           service: worker
           image: c
-    environment:
+    env:
       name: dev_registry
       account: 12345
       region:  "ap-northeast-1"

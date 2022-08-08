@@ -7,15 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        service: [api, websocket, worker]
+        include:
         - profile: dev
           environment: test1
-          images: [a, b, c]
+          api: a
+          websocket: b 
+          worker: c
         - profile: mlstg
           environment: test2
-          images: [d, e, f]
+          api: d
+          websocket: e 
+          worker: f
         - profile: dwstg
           environment: test3
-          images: [g, h, i]
+          api: g
+          websocket: h 
+          worker: i
     outputs:
       version: ${{ steps.tag.outputs.COMMIT_SHA }}          
     steps:
@@ -28,7 +36,7 @@ jobs:
       - name: second action
         run: echo ${{ matrix.environment }} 
       - name: third action
-        run: echo ${{ matrix.images }}
+        run: echo "${{ matrix.service }}:${{ ${{ matrix.service }} }}" 
   release:
     needs: [build]
     runs-on: ubuntu-latest

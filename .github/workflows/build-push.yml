@@ -18,12 +18,12 @@ jobs:
           environment: test3
           images: [g, h, i]
     outputs:
-      version: ${{ steps.tag.outputs.VERSION }}          
+      version: ${{ steps.tag.outputs.COMMIT_SHA }}          
     steps:
       - uses: actions/checkout@v2
       - name: Get the version
-        id: tag
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+        id: commit_sha
+        run: echo ::set-output name=COMMIT_SHA::${{ github.sha }}
       - name: first action
         run: echo ${{ matrix.profile }}
       - name: second action
@@ -42,7 +42,7 @@ jobs:
           mv linux-amd64/helm /usr/local/bin/helm
           helm version
       - name: fourth action
-        run: echo ${{ needs.build.outputs.version }}
+        run: echo ${{ needs.build.outputs.commit_sha }}
       # - name: fifth action
       #   run: echo ${{ matrix.environment }} 
       # - name: sixth action

@@ -7,23 +7,44 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        profile: [dev, mlstg, dwstg]
         service: [api, websocket, worker]
         include:
         - profile: dev
           environment: test1
-          api: a
-          websocket: b 
-          worker: c
+          service: api
+          image: a
+        - profile: dev
+          environment: test1
+          service: websocket
+          image: b
+        - profile: dev
+          environment: test1
+          service: worker
+          image: c
+        - profile: mlstg
+          service: api
+          environment: test2
+          image: d
+        - profile: mlstg
+          service: websocket
+          environment: test2
+          image: e
         - profile: mlstg
           environment: test2
-          api: d
-          websocket: e 
-          worker: f
+          image: f
+        - profile: dwstg
+          service: api
+          environment: test3
+          image: g
         - profile: dwstg
           environment: test3
-          api: g
-          websocket: h 
-          worker: i
+          service: websocket
+          image: h
+        - profile: dwstg
+          service: worker
+          environment: test3
+          image: i
     outputs:
       version: ${{ steps.tag.outputs.COMMIT_SHA }}          
     steps:

@@ -23,6 +23,11 @@ jobs:
           environment: test1
           service: worker
           image: c
+    environment:
+      account: 12345
+      region:  "ap-northeast-1"
+      keyID:   AWS_ACCESS_KEY_ID
+      secret:  AWS_SECRET_ACCESS_KEY
     outputs:
       version: ${{ steps.tag.outputs.COMMIT_SHA }}          
     steps:

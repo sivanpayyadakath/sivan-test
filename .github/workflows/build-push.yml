@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
         - profile: dev
           environment: test1
           images: [a, b, c]
@@ -23,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get the version
         id: commit_sha
-        run: echo ::set-output name=COMMIT_SHA::${{ github.sha }}
+        run: echo ::set-output name=COMMIT_SHA::${GITHUB_REF#refs/heads/}
       - name: first action
         run: echo ${{ matrix.profile }}
       - name: second action
@@ -42,7 +41,7 @@ jobs:
           mv linux-amd64/helm /usr/local/bin/helm
           helm version
       - name: fourth action
-        run: echo ${{ needs.build.outputs.commit_sha }}
+        run: echo ${{ needs.build.outputs.COMMIT_SHA }}
       # - name: fifth action
       #   run: echo ${{ matrix.environment }} 
       # - name: sixth action

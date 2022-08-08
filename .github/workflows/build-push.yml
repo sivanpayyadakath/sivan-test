@@ -1,0 +1,49 @@
+name: Build and push to each environments based on pushing a tag
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+        - profile: dev
+          environment: test1
+          images: [a, b, c]
+        - profile: mlstg
+          environment: test2
+          images: [d, e, f]
+        - profile: dwstg
+          environment: test3
+          images: [g, h, i]
+    outputs:
+      version: ${{ steps.tag.outputs.VERSION }}          
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get the version
+        id: tag
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+      - name: first action
+        run: echo ${{ matrix.profile }}
+      - name: second action
+        run: echo ${{ matrix.environment }} 
+      - name: third action
+        run: echo ${{ matrix.images }}
+  release:
+    needs: [build]
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install helm
+        run: |
+          curl -LO https://get.helm.sh/helm-v3.8.0-linux-amd64.tar.gz
+          tar -zxvf helm-v3.8.0-linux-amd64.tar.gz
+          mv linux-amd64/helm /usr/local/bin/helm
+          helm version
+      - name: fourth action
+        run: echo ${{ needs.build.outputs.version }}
+      # - name: fifth action
+      #   run: echo ${{ matrix.environment }} 
+      # - name: sixth action
+      #   run: echo ${{ matrix.images }}

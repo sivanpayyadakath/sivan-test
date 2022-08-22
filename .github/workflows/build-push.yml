@@ -1,7 +1,7 @@
 name: Build and push to each environments based on pushing a tag
-# on:
-#   pull_request:
-    # branches: []
+on:
+  pull_request:
+    branches: [master]
 jobs:
   build:
     runs-on: ubuntu-latest

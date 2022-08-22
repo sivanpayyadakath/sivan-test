@@ -47,7 +47,7 @@ jobs:
           image: i
     outputs:
       version: ${{ steps.tag.outputs.COMMIT_SHA }}       
-      json_output: ${{ steps.tag.outputs.JSON_OUTPUT }} 
+      json_output: ${{ steps.json.outputs.JSON_OUTPUT }} 
     steps:
       - uses: actions/checkout@v2
       - name: Get the version

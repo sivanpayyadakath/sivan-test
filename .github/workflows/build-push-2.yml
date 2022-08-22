@@ -1,0 +1,57 @@
+# name: Build and push to each environments based on pushing a tag
+# on:
+#   pull_request:
+#     branches: [master]
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     concurrency:
+#       group: build-dev
+#       cancel-in-progress: true    
+#     environment:
+#       name: dev_registry
+#     strategy:
+#       matrix:
+#         profile: [dev]
+#         service: [api, websocket, worker]
+#         account: [12345]
+#         include:
+#         - profile: dev
+#           environment: test1
+#           service: api
+#           image: a
+#         - profile: dev
+#           environment: test1
+#           service: websocket
+#           image: b
+#         - profile: dev
+#           environment: test1
+#           service: worker
+#           image: c
+#     env:
+#       account: 12345
+#       region:  "ap-northeast-1"
+#       keyID:   ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       secret:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       version: ${{ github.sha }}
+#     outputs:
+#       version: ${{ env.version }}          
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: first action
+#         run: echo ${{ matrix.profile }}
+#       - name: second action
+#         run: echo "${{ matrix.service }}:${{ matrix.image }}:${{ env.version }}"       
+#       - name: third action
+#         run: echo "${{ matrix.account }}:${{ env.region }}:${{ env.name }}:${{ env.keyID }}:${{ env.secret }}" 
+#   release:
+#     needs: [build]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: fourth action
+#         run: echo ${{ needs.build.outputs.version }}
+#       # - name: fifth action
+#       #   run: echo ${{ matrix.environment }} 
+#       # - name: sixth action
+#       #   run: echo ${{ matrix.images }}

@@ -1,0 +1,83 @@
+name: Build and push to each environments based on pushing a tag
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        profile: [dev]
+        service: [api, websocket, worker]
+        include:
+        - profile: dev
+          environment: test1
+          service: api
+          image: a
+        - profile: dev
+          environment: test1
+          service: websocket
+          image: b
+        - profile: dev
+          environment: test1
+          service: worker
+          image: c
+        - profile: mlstg
+          service: api
+          environment: test2
+          image: d
+        - profile: mlstg
+          service: websocket
+          environment: test2
+          image: e
+        - profile: mlstg
+          environment: test2
+          image: f
+        - profile: dwstg
+          service: api
+          environment: test3
+          image: g
+        - profile: dwstg
+          environment: test3
+          service: websocket
+          image: h
+        - profile: dwstg
+          service: worker
+          environment: test3
+          image: i
+    outputs:
+      version: ${{ steps.tag.outputs.COMMIT_SHA }}       
+      json_output: ${{ steps.json.outputs.JSON_OUTPUT }} 
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get the version
+        id: commit_sha
+        run: echo ::set-output name=COMMIT_SHA::${GITHUB_REF#refs/heads/}
+      - name: test json output
+        id: json
+        run: echo "::set-output name=JSON_OUTPUT::$(cat ./test.json)"
+      - name: first action
+        run: echo ${{ matrix.profile }}
+      - name: second action
+        run: echo ${{ matrix.environment }} 
+      - name: third action
+        run: echo "${{ matrix.service }}" 
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install helm
+        run: |
+          curl -LO https://get.helm.sh/helm-v3.8.0-linux-amd64.tar.gz
+          tar -zxvf helm-v3.8.0-linux-amd64.tar.gz
+          mv linux-amd64/helm /usr/local/bin/helm
+          helm version
+      - name: fourth action
+        env:
+          abc: ${{ needs.build.outputs.json_output }}
+        run: echo ${{ needs.build.outputs.json_output }}
+      # - name: fifth action
+      #   run: echo ${{ matrix.environment }} 
+      # - name: sixth action
+      #   run: echo ${{ matrix.images }}
